@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Game</title>
+  <link rel="stylesheet" href="../../libraries/bootstrab.css">
+  <link rel="stylesheet" href="../css/createPage.css">
+
+</head>
+
+<body>
+  <div class="create-gmae">
+    <form id="main-info" class="">
+
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Enter Name " id="name" name="name">
+
+      </div>
+      <div class="row">
+        <div class="col">
+          <input type="number" class="form-control" max="25" min="2" placeholder=" row" id="row" name="row">
+        </div>
+        <div class="col">
+          <input type="number" class="form-control" max="25" min="2" placeholder="col" id="col" name="col">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block btn-main-info " id="btnMainIfo">Submit</button>
+    </form>
+    <div id="fill-border" class="hide">
+      <div class='left-part'>
+        <div class="left-part--header">Pleass select color</div>
+
+
+        <div class="color-list">
+
+          <div class='color-item activ' style='background:rgb(243, 83, 105)' data-color="(243, 83, 105)"></div>
+          <div class='color-item' style='background:rgb(0, 132, 255)' data-color="(0, 132, 255)"></div>
+          <div class='color-item' style='background:rgb(84, 199, 236)' data-color="(84, 199, 236)"></div>
+
+          <div class='color-item' style='background:rgb(214, 150, 187)' data-color="(214, 150, 187)"></div>
+          <div class='color-item' style='background:rgb(100, 240, 100)' data-color="(100, 240, 100)"></div>
+          <div class='color-item' style='background:rgb(66, 183, 42)' data-color="(66, 183, 42)"></div>
+          <div class='color-item' style='background:rgb(247, 146, 59)' data-color="(247, 146, 59)"></div>
+          <div class='color-item' style='background:rgb(230, 133, 133)' data-color="(230, 133, 133)"></div>
+          <div class='color-item' style='background:rgb(140, 114, 203)' data-color="(140, 114, 203)"></div>
+
+          <div class='color-item' style='background:rgb(163, 206, 113)' data-color="(163, 206, 113)"></div>
+          <div class='color-item' style='background:rgb(207, 165, 136)' data-color="(207, 165, 136)"></div>
+          <div class='color-item' style='background:rgb(255, 255, 0)' data-color="(255, 255, 0)"></div>
+
+
+        </div>
+        <div class="action">
+          <button type="button" class="btn btn-danger btn-block clear">Clear</button>
+
+          <button type="button" class="btn btn-primary btn-block new">New</button>
+          <button type="button" class="btn btn-success btn-block create-game-button ">create</button>
+        </div>
+
+
+
+      </div>
+      <div class="right-part">
+        <div class="game-name">
+          name
+          <div class="num-item right">1</div>
+        </div>
+
+        <div id="border">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../libraries/sweetAlert.js"> </script>
+  <script src="../js/API.js"></script>
+
+  <script src="../../libraries/jquery.js"></script>
+
+  <script src="../js/createGame.js"></script>
+</body>
+
+</html>
