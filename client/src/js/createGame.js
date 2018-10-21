@@ -1,5 +1,3 @@
-// swal('Good job!', 'You clicked the button!', 'success');
-// "warning", "error", "success"  "info".
 $(document).ready(function() {
   const data = { border: {} };
   let id = 1;
@@ -9,57 +7,22 @@ $(document).ready(function() {
     const border = $('#border');
     const width = border.width() / data.col;
     const height = border.height() / data.row;
-    for (let i = 0; i < data.col; i++) {
-      data.border[i] = {};
-    }
-    for (let j = 0; j < data.row; j++) {
-      for (let i = 0; i < data.col; i++) {
-        data.border[i][j] = {};
 
-        border.append(
-          `<div class="rect" style="width:${width}px;height:${height}" data-row="${j}" data-col="${i}"></div>`
-        );
-      }
+    for (let i = 0, j = data.col * data.row; i < j; i++) {
+      data.border[i] = {};
+      border.append(
+        `<div class="rect" style="width:${width}px;height:${height}" data-index="${i}"></div>`
+      );
     }
+  };
+
+  const handelChange = e => {
+    data[e.target.name] = e.target.value;
   };
 
   $('#name').on('input', e => handelChange(e));
   $('#col').on('input', e => handelChange(e));
   $('#row').on('input', e => handelChange(e));
-  $('#btnMainIfo').on('click', e => handelSumpit(e));
-
-  const getId = color => {
-    for (let i = 0; i < data.col; i++) {
-      for (let j = 0; j < data.row; j++) {
-        if (data.border[i][j].color == color) {
-          return data.border[i][j].id;
-        }
-      }
-    }
-    return null;
-  };
-
-  $('.color-item').on('click', function() {
-    const color = $(this).data('color');
-    const redId = getId('(243, 83, 105)');
-    console.log(color, redId, id);
-    if (color == '(243, 83, 105)' && redId && redId != id) {
-      swal('Error!', "You  can't add more then one red item ", 'error');
-    } else {
-      $('.activ').removeClass('activ');
-      $(this).addClass('activ');
-
-      selectColor = color;
-      id++;
-      $('.game-name').html(
-        `${data.name} <div  style="float: right;">${id}</div>`
-      );
-    }
-  });
-
-  const handelChange = e => {
-    data[e.target.name] = e.target.value;
-  };
 
   const handelSumpit = e => {
     e.preventDefault();
@@ -75,29 +38,51 @@ $(document).ready(function() {
     }
   };
 
+  $('#btnMainIfo').on('click', e => handelSumpit(e));
+
+  const getId = color => {
+    for (let i = 0, j = data.col * data.row; i < j; i++) {
+      if (data.border[i].color == color) {
+        return data.border[i].id;
+      }
+    }
+    return null;
+  };
+
+  $('.color-item').on('click', function() {
+    const color = $(this).data('color');
+    const redId = getId('(243, 83, 105)');
+    if (color == '(243, 83, 105)' && redId && redId != id) {
+      swal('Error!', "You  can't add more then one red item ", 'error');
+    } else {
+      $('.activ').removeClass('activ');
+      $(this).addClass('activ');
+
+      selectColor = color;
+      id++;
+      $('.game-name').html(
+        `${data.name} <div  style="float: right;">${id}</div>`
+      );
+    }
+  });
+
   const redrawBorder = () => {
     const border = $('#border');
     const width = border.width() / data.col;
     const height = border.height() / data.row;
     border.html('');
-    for (let j = 0; j < data.row; j++) {
-      for (let i = 0; i < data.col; i++) {
-        border.append(
-          `<div class="rect" style="width:${width}px;height:${height};background:rgb${
-            data.border[i][j].color
-          }" data-row="${j}" data-col="${i}" data-id="${
-            data.border[i][j].id
-          }"></div>`
-        );
-      }
+    for (let i = 0, j = data.col * data.row; i < j; i++) {
+      border.append(
+        `<div class="rect" style="width:${width}px;height:${height};background:rgb${
+          data.border[i].color
+        }" data-index="${i}"  data-id="${data.border[i].id}"></div>`
+      );
     }
   };
 
   const clearData = () => {
-    for (let i = 0; i < data.col; i++) {
-      for (let j = 0; j < data.row; j++) {
-        data.border[i][j] = {};
-      }
+    for (let i = 0, j = data.col * data.row; i < j; i++) {
+      data.border[i] = {};
     }
     id = 1;
     selectColor = '(243, 83, 105)';
@@ -116,89 +101,106 @@ $(document).ready(function() {
     );
   });
 
-  const findId = id => {
-    let arry = [];
-    for (let i = 0; i < data.col; i++) {
-      for (let j = 0; j < data.row; j++) {
-        if (data.border[i][j].id == id) {
-          arry.push([i, j]);
-        }
-      }
-    }
-    return arry.length ? arry : null;
+  const getLeft = (index, col, row) => {
+    const left = index - 1;
+    return left >= 0 && Math.floor(left / col) == Math.floor(index / col)
+      ? left
+      : null;
   };
+  const getTop = (index, col, row) => {
+    const Top = index - parseInt(col);
+    return Top >= 0 ? Top : null;
+  };
+  const getBotton = (index, col, row) => {
+    const Botton = index + parseInt(col);
+    return Botton < col * row ? Botton : null;
+  };
+  const getRight = (index, col, row) => {
+    const Right = index + 1;
+    return Right < col * row &&
+      Math.floor(Right / col) == Math.floor(index / col)
+      ? Right
+      : null;
+  };
+
   $('#border').on('click', '.rect', function() {
-    const col = $(this).data('col');
-    const row = $(this).data('row');
-    const arryId = findId(id);
-    if (data.border[col][row].color) {
+    const index = $(this).data('index');
+    if (data.border[index].color) {
       swal('Error!', 'You  cont add this item hear', 'error');
       return;
     }
-    if (arryId) {
-      console.log(arryId, col, row);
-      for (let i = 0; i < arryId.length; i++) {
-        if (
-          ((arryId[i][0] == col - 1 || arryId[i][0] == col + 1) &&
-            arryId[i][1] == row) ||
-          ((arryId[i][1] == row - 1 || arryId[i][1] == row + 1) &&
-            arryId[i][0] == col)
-        ) {
-          data.border[col][row].color = selectColor;
-          data.border[col][row].id = id;
-
-          redrawBorder();
-          return;
-        }
+    let bigItem = false;
+    for (let i = 0, j = data.col * data.row; i < j; i++) {
+      if (data.border[i].id == id) {
+        bigItem = true;
+        break;
       }
-      swal('Error!', 'item must be connected', 'error');
-      return;
     }
-    data.border[col][row].color = selectColor;
-    data.border[col][row].id = id;
+
+    if (bigItem) {
+      const Left = getLeft(index, data.col, data.row);
+      const Right = getRight(index, data.col, data.row);
+      const Botton = getBotton(index, data.col, data.row);
+      const Top = getTop(index, data.col, data.row);
+
+      if (
+        (Left == null || data.border[Left].id != id) &&
+        (Right == null || data.border[Right].id != id) &&
+        (Botton == null || data.border[Botton].id != id) &&
+        (Top == null || data.border[Top].id != id)
+      ) {
+        swal('Error!', 'item mast be connect ', 'error');
+        return;
+      }
+    }
+    data.border[index].color = selectColor;
+    data.border[index].id = id;
 
     redrawBorder();
   });
 
   const improvementData = () => {
     const items = {};
-    for (let i = 0; i < data.col; i++) {
-      for (let j = 0; j < data.row; j++) {
-        if (data.border[i][j].id) {
-          if (items[data.border[i][j].id]) {
-            items[data.border[i][j].id].push([i, j]);
-          } else {
-            items[data.border[i][j].id] = [[i, j]];
-          }
+    for (let i = 0, j = data.col * data.row; i < j; i++) {
+      if (data.border[i].id) {
+        if (items[data.border[i].id]) {
+          items[data.border[i].id].push(i);
+        } else {
+          items[data.border[i].id] = [i];
         }
-        if (
-          i - 1 > 0 &&
-          data.border[i][j].id &&
-          data.border[i][j].id == data.border[i - 1][j].id
-        ) {
-          data.border[i][j].left = true;
-        }
-        if (
-          j - 1 > 0 &&
-          data.border[i][j].id &&
-          data.border[i][j].id == data.border[i][j - 1].id
-        ) {
-          data.border[i][j].tob = true;
-        }
-        if (
-          i + 1 < data.col &&
-          data.border[i][j].id &&
-          data.border[i][j].id == data.border[i + 1][j].id
-        ) {
-          data.border[i][j].right = true;
-        }
-        if (
-          j + 1 < data.row &&
-          data.border[i][j].id &&
-          data.border[i][j].id == data.border[i][j + 1].id
-        ) {
-          data.border[i][j].botton = true;
-        }
+      }
+      const Left = getLeft(i, data.col, data.row);
+      const Right = getRight(i, data.col, data.row);
+      const Botton = getBotton(i, data.col, data.row);
+      const Top = getTop(i, data.col, data.row);
+
+      if (
+        Left != null &&
+        data.border[i].id &&
+        data.border[Left].id == data.border[i].id
+      ) {
+        data.border[i].left = true;
+      }
+      if (
+        Right != null &&
+        data.border[i].id &&
+        data.border[Right].id == data.border[i].id
+      ) {
+        data.border[i].right = true;
+      }
+      if (
+        Botton != null &&
+        data.border[i].id &&
+        data.border[Botton].id == data.border[i].id
+      ) {
+        data.border[i].botton = true;
+      }
+      if (
+        Top != null &&
+        data.border[i].id &&
+        data.border[Top].id == data.border[i].id
+      ) {
+        data.border[i].top = true;
       }
     }
     data.items = items;
@@ -206,7 +208,6 @@ $(document).ready(function() {
     if (!getId('(243, 83, 105)')) {
       return 'pleass add red item';
     }
-    console.log(items);
     if (Object.keys(items).length < 2) {
       return 'pleass add more item';
     }
@@ -219,7 +220,6 @@ $(document).ready(function() {
       swal('Error!', improv, 'error');
       return;
     }
-    console.log(data);
     const response = await Api.post('game', data);
     const status = response.status;
     if (status === 200) {

@@ -6,9 +6,65 @@
   box-sizing: border-box;
 }
 body {
-  background: #ccc;
+  background: #2d7ff9;
   width: 100vw;
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
   height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #f4f4f4;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 10px;
+}
+
+#select-page {
+  width: 850px;
+  height: 95%;
+  background: #fff;
+  border-radius: 4px;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.right-part {
+  padding: 20px;
+  flex-grow: 1;
+}
+.left-part {
+  overflow-y: auto;
+
+  padding: 20px;
+  width: 250px;
+}
+.border {
+  display: flex;
+  flex-wrap: wrap;
+  background: #262626;
+  width: 560px;
+  height: 500px;
+}
+.border div {
+  border: 1px solid #262626;
+}
+
+.play {
+  float: right;
+  margin-top: 10px;
 }

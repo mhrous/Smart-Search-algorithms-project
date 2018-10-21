@@ -5,6 +5,22 @@
   margin: 0;
   box-sizing: border-box;
 }
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #f4f4f4;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 10px;
+}
+
 body {
   background: #2d7ff9;
   width: 100vw;
