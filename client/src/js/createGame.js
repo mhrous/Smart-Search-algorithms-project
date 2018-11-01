@@ -2,7 +2,7 @@ $(document).ready(function() {
   const data = { border: {} };
   let id = 1;
 
-  let selectColor = '(243, 83, 105)';
+  let selectColor = '(255,0,0)';
   const biuldBorder = () => {
     const border = $('#border');
     const width = border.width() / data.col;
@@ -41,7 +41,7 @@ $(document).ready(function() {
   $('#btnMainIfo').on('click', e => handelSumpit(e));
 
   const getId = color => {
-    for (let i = 0, j = data.col * data.row; i < j; i++) {
+    for (let i in data.border) {
       if (data.border[i].color == color) {
         return data.border[i].id;
       }
@@ -51,8 +51,8 @@ $(document).ready(function() {
 
   $('.color-item').on('click', function() {
     const color = $(this).data('color');
-    const redId = getId('(243, 83, 105)');
-    if (color == '(243, 83, 105)' && redId && redId != id) {
+    const redId = getId('(255,0,0)');
+    if (color == '(255,0,0)' && redId && redId != id) {
       swal('Error!', "You  can't add more then one red item ", 'error');
     } else {
       $('.activ').removeClass('activ');
@@ -71,7 +71,7 @@ $(document).ready(function() {
     const width = border.width() / data.col;
     const height = border.height() / data.row;
     border.html('');
-    for (let i = 0, j = data.col * data.row; i < j; i++) {
+    for (let i in data.border) {
       border.append(
         `<div class="rect" style="width:${width}px;height:${height};background:rgb${
           data.border[i].color
@@ -81,11 +81,11 @@ $(document).ready(function() {
   };
 
   const clearData = () => {
-    for (let i = 0, j = data.col * data.row; i < j; i++) {
+    for (let i in data.border) {
       data.border[i] = {};
     }
     id = 1;
-    selectColor = '(243, 83, 105)';
+    selectColor = '(255,0,0)';
     redrawBorder();
     $('.activ').removeClass('activ');
     $('.color-item')
@@ -102,21 +102,21 @@ $(document).ready(function() {
   });
 
   const getLeft = (index, col, row) => {
-    const left = index - 1;
+    const left = parseInt(index) - 1;
     return left >= 0 && Math.floor(left / col) == Math.floor(index / col)
       ? left
       : null;
   };
   const getTop = (index, col, row) => {
-    const Top = index - parseInt(col);
+    const Top = parseInt(index) - parseInt(col);
     return Top >= 0 ? Top : null;
   };
   const getBotton = (index, col, row) => {
-    const Botton = index + parseInt(col);
+    const Botton = parseInt(index) + parseInt(col);
     return Botton < col * row ? Botton : null;
   };
   const getRight = (index, col, row) => {
-    const Right = index + 1;
+    const Right = parseInt(index) + 1;
     return Right < col * row &&
       Math.floor(Right / col) == Math.floor(index / col)
       ? Right
@@ -130,7 +130,7 @@ $(document).ready(function() {
       return;
     }
     let bigItem = false;
-    for (let i = 0, j = data.col * data.row; i < j; i++) {
+    for (let i in data.border) {
       if (data.border[i].id == id) {
         bigItem = true;
         break;
@@ -161,7 +161,8 @@ $(document).ready(function() {
 
   const improvementData = () => {
     const items = {};
-    for (let i = 0, j = data.col * data.row; i < j; i++) {
+    for (let i in data.border) {
+      console.log(i, data.border[i], data.border[i].id);
       if (data.border[i].id) {
         if (items[data.border[i].id]) {
           items[data.border[i].id].push(i);
@@ -173,6 +174,7 @@ $(document).ready(function() {
       const Right = getRight(i, data.col, data.row);
       const Botton = getBotton(i, data.col, data.row);
       const Top = getTop(i, data.col, data.row);
+      console.log(Left, Botton, Right, Top);
 
       if (
         Left != null &&
@@ -203,9 +205,8 @@ $(document).ready(function() {
         data.border[i].top = true;
       }
     }
-    data.items = items;
 
-    if (!getId('(243, 83, 105)')) {
+    if (!getId('(255,0,0)')) {
       return 'pleass add red item';
     }
     if (Object.keys(items).length < 2) {

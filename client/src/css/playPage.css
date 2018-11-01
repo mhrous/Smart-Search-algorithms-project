@@ -29,3 +29,111 @@ body {
   background: #aaa;
   border-radius: 10px;
 }
+
+#play-page {
+  width: 850px;
+  height: 95%;
+  background: #fff;
+  border-radius: 4px;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.right-part {
+  padding: 20px;
+  flex-grow: 1;
+}
+.left-part {
+  position: relative;
+  padding: 20px;
+  width: 250px;
+}
+.border {
+  display: flex;
+  flex-wrap: wrap;
+  background: #262626;
+  width: 560px;
+  height: 550px;
+}
+.border div {
+  border: 2px solid #262626;
+}
+
+.border div.select {
+  border: 3px solid white;
+}
+
+#play-page .left-part .action {
+  position: absolute;
+  top: calc(100% - 20px);
+  width: calc(100% - 100px);
+  left: 50px;
+  transform: translate(0, -100%);
+}
+
+#play-page .left-part .action div {
+  position: relative;
+  height: 150px;
+}
+
+#play-page .left-part .action div span {
+  width: 35px;
+  height: 35px;
+  border-left: 5px solid #999;
+  border-top: 5px solid #999;
+}
+
+#play-page .left-part .action div span {
+  position: absolute;
+}
+
+#play-page .left-part .action div span.top {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%) rotate(45deg);
+  cursor: not-allowed;
+}
+
+#play-page .left-part .action div span.right {
+  top: 50%;
+  left: 100%;
+  transform: translate(-100%, -50%) rotate(135deg);
+  cursor: not-allowed;
+}
+#play-page .left-part .action div span.botton {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -100%) rotate(225deg);
+  cursor: not-allowed;
+}
+#play-page .left-part .action div span.left {
+  top: 50%;
+  left: 0;
+  transform: translate(0%, -50%) rotate(315deg);
+  cursor: not-allowed;
+}
+#play-page .left-part .action div span.C {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid #999;
+  border-radius: 50%;
+  width: 50%;
+  height: 50%;
+}
+
+#play-page .left-part .action div span.can-move {
+  border-color: green;
+  cursor: pointer;
+}
+
+button {
+  margin-bottom: 15px;
+}
+
+.hide {
+  display: none;
+}

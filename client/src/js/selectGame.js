@@ -17,17 +17,15 @@ $(document).ready(function() {
       nameGame = json;
     }
     str = '';
-    for (let i = 0; i < nameGame.length; i++) {
-      str += `  <li class="list-group-item" data-id="${nameGame[i].id}">${
-        nameGame[i].name
+    for (let item of nameGame) {
+      str += `  <li class="list-group-item" data-id="${item.id}">${
+        item.name
       }</li>
 
         `;
     }
     $('#game-name-list').append(str);
   };
-
-
 
   const getGameFromServer = async id => {
     const response = await Api.get(`game/${id}`);
@@ -52,6 +50,4 @@ $(document).ready(function() {
     $('.play').removeClass('disabled');
     $('.play').on('click', startGame);
   });
-
-
 });
